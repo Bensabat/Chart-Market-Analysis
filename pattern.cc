@@ -1,4 +1,5 @@
 #include "data.hh"
+
 bool doubleTop(float n1, float n2, float n3, float n4, float n5) {
     if (n1 < n2 && n1 < n3 && n1 < n4 &&
         n5 < n2 && n5 < n3 && n5 < n4 &&
@@ -38,6 +39,12 @@ std::vector<std::tuple<struct data, struct data, enum Type>> getPatterns(std::ve
     return res;
 }
 
-
+void printPattern(std::vector<std::tuple<struct data, struct data, enum Type>> patterns) {
+    for (size_t i = 0; i < patterns.size(); i++) {
+        std::cout << std::get<2>(patterns[i]) << ": du "
+                  << std::get<0>(patterns[i]).date << "eme au "
+                  << std::get<1>(patterns[i]).date << "eme date ";
+    }
+}
 
 
