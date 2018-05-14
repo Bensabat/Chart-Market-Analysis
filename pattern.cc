@@ -1,16 +1,4 @@
-#include <vector>
-#include <tuple>
-
-struct data {
-  float value;
-  time_t date;
-};
-
-enum Type {
-    DoubleTop,
-    DoubleBottom
-};
-
+#include "data.hh"
 bool doubleTop(float n1, float n2, float n3, float n4, float n5) {
     if (n1 < n2 && n1 < n3 && n1 < n4 &&
         n5 < n2 && n5 < n3 && n5 < n4 &&
