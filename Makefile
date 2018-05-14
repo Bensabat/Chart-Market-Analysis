@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS=-Wall -Wextra -Werror -std=c++14 -pedantic -O2
-SRC=pattern.cc
+SRC=src/pattern.cc
 OBJ=$(SRC:.cc=.o)
 EXEC=pattern
 all: $(OBJ)
