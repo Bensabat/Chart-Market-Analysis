@@ -1,30 +1,90 @@
+#include <iomanip>
 #include "parser.hh"
 
 namespace Parser
 {
+    // Function that transform a string date to int
+    int dateToInt(std::string s)
+    {
+        int secondes = 0;
+        size_t pos, i = 0;
+        std::string token;
+        
+        while ((pos = s.find(":")) != std::string::npos)
+        {
+            token = s.substr(0, pos);
+            secondes += std::stoi(token) * 3600; // Houres to secondes
+            s.erase(0, pos + 1);
+            i++;
+        }
 
-int parser(std::vector<data> day)
-{
-	std::ifstream infile("./ressources/CAC40_2018-05-14.txt");
+        secondes += std::stoi(s) * 60; // Minutes to secondes
+        return secondes;
+    }
 
-	std::string s1, s2, s3, s4, s5, s6, s7, s8;
+    // Function that parse a file and file the struct day
+    int parser(day &day, std::string path)
+    {
+        std::ifstream infile(path);
+        std::string s1, s2, s3, s4, s5, s6, s7, s8;
 
-	if (!(infile >> s1 >> s2 >> s3 >> s4 >> s5 >> s6 >> s7))
-	{
-		std::cout << "Error: could not read first line, abort. \n";
-	}
+        // Bypass first header line
+        if (!(infile >> s1 >> s2 >> s3 >> s4 >> s5 >> s6 >> s7))
+        {
+            std::cerr << "Error: could not read first line, abort. \n";
+            return 1;
+        }
+        else
+        {   // successfully extracted one line, data is in s1, ..., s8.
+            while (infile >> s1 >> s2 >> s3 >> s4 >> s5 >> s6 >> s7 >> s8)
+            {
+                // Creation of a dot
+                data point = data();
+                point.value = strtof((s3).c_str(), 0);
+                point.date = dateToInt(s2);
+                // Add this dot to the day
+                day.data_vect.push_back(point);        
+            }
 
-	while (infile >> s1 >> s2 >> s3 >> s4 >> s5 >> s6 >> s7 >> s8)
-	{
-		// successfully extracted one line, data is in s1, ..., s8.
-		//std::cout << s1 << s2 << s3 << s4 << s5 << s6 << s7 << s8 << std::endl;
-        data point = data();
-        point.value = strtof((s2).c_str(), 0);
-        point.date = 1;
-        day.push_back(point);
-	}
+            // Add the date and the name to the day
+            day.date = s1;
+            day.name = path;
 
-    return 0;
-}
+            return 0;        
+        }
+    }
 
+    // Function that parse all file of a folder and file the vector of day
+    void parse_days(std::vector<day> days)
+    {
+        // Browse data files throught ressources folder
+        std::string path = "./ressources/";
+        std::cout << "-> Begining parsing: " << path << " folder will be parsed.\n" << std::endl;
+        for (auto & file_path : std::experimental::filesystem::directory_iterator(path))
+        {
+            std::string file_path_str = file_path.path();
+
+            // Printing current path file
+            std::cout << "\tParsing of file " << file_path_str << std::endl;
+
+            // Creating a new day
+            day current_day;
+            days.push_back(current_day);
+
+            // Filling the new day
+            parser(current_day, file_path_str);
+
+            //std::cout << current_day.data_vect.size() << std::endl;
+
+            /*
+            std::vector<data>::iterator it;
+            for(it = current_day.data_vect.begin(); it != current_day.data_vect.end(); it++)
+            {
+                std::cout << "value: " << it->value << " time: " << it->date << std::endl;
+            }
+            std::cout << "date: " << current_day.date << " name: " << current_day.name << std::endl;
+            */
+        }
+        std::cout << "\n-> Finished parsing: " << days.size() << " files has been parsed.\n" << std::endl;
+    }
 }

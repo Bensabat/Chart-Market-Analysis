@@ -6,14 +6,9 @@
 
 int main()
 {
-	std::vector<data> day;
-	Parser::parser(day);
-
-	std::vector<data>::iterator it;
-	for(it = day.begin(); it != day.end(); it++)
-	{
-		std::cout << it->value << std::endl;
-	}
+	// Vector containing all the days data
+	std::vector<day> days;
+	Parser::parse_days(days);	
 	
 	return 0;
 }
