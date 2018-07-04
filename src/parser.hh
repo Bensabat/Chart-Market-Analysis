@@ -7,12 +7,10 @@
 #include <sstream>
 #include <locale>
 #include <algorithm>
-#include <experimental/filesystem>
+#include <boost/filesystem.hpp>
+#include <iomanip>
 #include "data.hh"
 
-namespace Parser
-{
-    int dateToInt(std::string s);
-    int parser(day &day, std::string path);
-    void parse_days(std::vector<day> days);    
-}
+int dateToInt(std::string s);
+int parser(struct day &day, std::string path);
+void parse_days(std::vector<day> days);    
