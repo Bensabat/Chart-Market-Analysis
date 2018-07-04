@@ -24,6 +24,7 @@ std::vector<data> simplification(std::vector<data> points)
   int index = 0;
   int last_idx = points.size() - 1;
 
+  // Find the point with the max distance
   for (std::size_t t = 0; t != points.size(); ++t)
   {
     float d = perpendicularDistance(points[t], points[0], points[last_idx]);
@@ -34,16 +35,26 @@ std::vector<data> simplification(std::vector<data> points)
     }
   }
 
+  // If max dist is greater than epsilon, than simplify
   if (dmax > epsilon)
   {
     std::vector<data> first_mid = std::vector<data>();
+    // Get the first half
     for (int i = 0; i < index; i++)
       first_mid.push_back(points[i]);
+
+    // Recursive call
     std::vector<data> res1 = simplification(first_mid);
+
+    // Get the second half
     first_mid.clear();
     for (int i = index; i < last_idx; i++)
       first_mid.push_back(points[i]);
+
+    // Recursive call
     std::vector<data> res2 = simplification(first_mid);
+
+    // Build the result list
     auto res = std::vector<data>();
     for (auto ele : res1)
       res.push_back(ele);
@@ -51,5 +62,7 @@ std::vector<data> simplification(std::vector<data> points)
       res.push_back(ele);
     return res;
   }
+
+  // If the distance is not greater, then return all points
   return points;
 }
