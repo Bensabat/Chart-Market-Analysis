@@ -3,7 +3,7 @@
 // float: value
 // int: date
 
-float perpendicularDistance(struct data p, struct data first, struct data last)
+float perpendicularDistance(data p, data first, data last)
 {
   float num = (last.value - first.value) * p.date 
     - (last.date - first.date) * p.value
@@ -16,9 +16,9 @@ float perpendicularDistance(struct data p, struct data first, struct data last)
   return num / dem;
 }
 
-std::vector<struct data> simplification(std::vector<struct data> points)
+std::vector<data> simplification(std::vector<data> points)
 {
-  float epsilon = 5;
+  float epsilon = 0;
 
   float dmax = 0;
   int index = 0;
@@ -36,16 +36,15 @@ std::vector<struct data> simplification(std::vector<struct data> points)
 
   if (dmax > epsilon)
   {
-    std::vector<struct data> first_mid = std::vector<struct data>();
+    std::vector<data> first_mid = std::vector<data>();
     for (int i = 0; i < index; i++)
       first_mid.push_back(points[i]);
-    std::vector<struct data> res1 = simplification(first_mid);
+    std::vector<data> res1 = simplification(first_mid);
     first_mid.clear();
     for (int i = index; i < last_idx; i++)
       first_mid.push_back(points[i]);
-    std::vector<struct data> res2 = simplification(first_mid);
-    // vector1.insert( vector1.end(), vector2.begin(), vector2.end() );
-    auto res = std::vector<struct data>();
+    std::vector<data> res2 = simplification(first_mid);
+    auto res = std::vector<data>();
     for (auto ele : res1)
       res.push_back(ele);
     for (auto ele : res2)
