@@ -1,7 +1,9 @@
 CXX      = g++
 CXXFLAGS = -Werror -Wextra -Wall -pedantic -std=c++14 -O2
 
-SRC  = src/main.cc src/parser.cc
+SRC  = src/main.cc		\
+			 src/parser.cc	\
+			 src/simple.cc
 EXEC = parser
 
 SRC2 =src/pattern.cc
