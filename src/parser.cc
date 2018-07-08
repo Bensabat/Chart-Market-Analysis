@@ -19,7 +19,7 @@ int dateToInt(std::string s)
   return secondes;
 }
 
-// Function that parse a file and file the struct day
+// Function that parse a file and fills the struct day
 int parser(day &day, std::string path)
 {
   std::ifstream infile(path);
@@ -51,36 +51,48 @@ int parser(day &day, std::string path)
   }
 }
 
-// Function that parse all file of a folder and file the vector of day
+// Function that parse all file of a folder and fills the vector of day
 void parse_days(std::vector<day> days)
 {
   // Browse data files throught ressources folder
   std::string path = "./ressources/";
-  std::cout << "-> Begining parsing: " << path << " folder will be parsed.\n" << std::endl;
-  for (auto & file_path : std::experimental::filesystem::directory_iterator(path))
-  {
-    std::string file_path_str = file_path.path();
+  std::cout << "\n-> Begining parsing: " << path << " folder will be parsed.\n" << std::endl;
+  
+  // Creating DIR structure
+  DIR *dir;
+	struct dirent *ent;
 
-    // Printing current path file
-    std::cout << "\tParsing of file " << file_path_str << std::endl;
+  // Check if folder exist
+	if ((dir = opendir ("./ressources/")) != NULL)
+	{
+		// Print files within directory
+		while ((ent = readdir (dir)) != NULL)
+		{
+      // Getting current path file string
+			std::string file_path_str = ent->d_name;
 
-    // Creating a new day
-    day current_day;
-    days.push_back(current_day);
+      // If file is allows ".txt" extension
+      if (file_path_str.length() > 4)
+      {
+        std::cout << "\tParsing of file " << file_path_str << std::endl;
 
-    // Filling the new day
-    parser(current_day, file_path_str);
+        // Creating a new day
+        day current_day;
+        days.push_back(current_day);
 
-    //std::cout << current_day.data_vect.size() << std::endl;
+        // Filling the new day
+        parser(current_day, path + file_path_str);
+      }
+		}
+		closedir (dir);
+	}
 
-    /*
-       std::vector<data>::iterator it;
-       for(it = current_day.data_vect.begin(); it != current_day.data_vect.end(); it++)
-       {
-       std::cout << "value: " << it->value << " time: " << it->date << std::endl;
-       }
-       std::cout << "date: " << current_day.date << " name: " << current_day.name << std::endl;
-       */
-  }
+  // Exit error if folder cannot be opened
+	else
+	{
+		perror ("");
+		exit(1);
+	}
+
   std::cout << "\n-> Finished parsing: " << days.size() << " files has been parsed.\n" << std::endl;
 }

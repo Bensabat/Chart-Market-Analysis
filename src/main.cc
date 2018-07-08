@@ -8,7 +8,7 @@ int main()
 {
 	// Vector containing all the days data
 	std::vector<day> days;
-	Parser::parse_days(days);	
+	parse_days(days);	
 	
 	return 0;
 }
