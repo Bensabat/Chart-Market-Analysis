@@ -40,7 +40,7 @@ int parser(day &day, std::string path)
       point.value = strtof((s3).c_str(), 0);
       point.date = dateToInt(s2);
       // Add this dot to the day
-      day.data_vect.push_back(point);        
+      day.data_vect.push_back(point);
     }
 
     // Add the date and the name to the day
@@ -74,15 +74,14 @@ void parse_days(std::vector<day> &days)
       // If file is allows ".txt" extension
       if (file_path_str.length() > 4)
       {
-        std::cout << "\tParsing of file " << file_path_str << std::endl;
-
         // Creating a new day
         day current_day;
-        days.push_back(current_day);
 
         // Filling the new day
         parser(current_day, path + file_path_str);
-        
+
+        // Push day on days vector
+        days.push_back(current_day);
       }
 		}
 		closedir (dir);
