@@ -13,4 +13,4 @@
 
 int dateToInt(std::string s);
 int parser(day &day, std::string path);
-void parse_days(std::vector<day> days);    
+void parse_days(std::vector<day> &days);    

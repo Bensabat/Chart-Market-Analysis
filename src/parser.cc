@@ -52,7 +52,7 @@ int parser(day &day, std::string path)
 }
 
 // Function that parse all file of a folder and fills the vector of day
-void parse_days(std::vector<day> days)
+void parse_days(std::vector<day> &days)
 {
   // Browse data files throught ressources folder
   std::string path = "./ressources/";
@@ -82,6 +82,7 @@ void parse_days(std::vector<day> days)
 
         // Filling the new day
         parser(current_day, path + file_path_str);
+        
       }
 		}
 		closedir (dir);
