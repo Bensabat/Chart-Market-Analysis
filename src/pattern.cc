@@ -64,11 +64,16 @@ std::vector<std::tuple<struct data, struct data, enum Type>> getPatternsParallel
 
 
 void printPattern(std::vector<std::tuple<struct data, struct data, enum Type>> patterns) {
+  if (patterns.size() == 0)
+    std::cout << "No pattern found.\n";
+  else 
+  {
     for (size_t i = 0; i < patterns.size(); i++) {
         std::cout << std::get<2>(patterns[i]) << ": du "
                   << std::get<0>(patterns[i]).date << "eme au "
                   << std::get<1>(patterns[i]).date << "eme date " << std::endl;
     }
+  }
 }
 
 

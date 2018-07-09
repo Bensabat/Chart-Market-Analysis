@@ -13,19 +13,25 @@ float perpendicularDistance(data p, data first, data last)
   float dem = (last.value - first.value) * (last.value - first.value)
     + (last.date - first.date) * (last.date - last.date);
   dem = std::sqrt(dem);
-  return num / dem;
+
+  auto res = num / dem;
+  if (std::isinf(res) || !std::isfinite(res))
+    return 0;
+  return res;
 }
 
 std::vector<data> simplification(std::vector<data> points)
 {
-  float epsilon = 0;
+  // Hard to find a correct epsilon because it depends too much
+  // on each dataset. Can compute by machine learning an average of each action
+  float epsilon = 100;
 
   float dmax = 0;
   int index = 0;
   int last_idx = points.size() - 1;
 
   // Find the point with the max distance
-  for (std::size_t t = 0; t != points.size(); ++t)
+  for (std::size_t t = 1; t != points.size(); ++t)
   {
     float d = perpendicularDistance(points[t], points[0], points[last_idx]);
     if (d > dmax)
@@ -40,7 +46,7 @@ std::vector<data> simplification(std::vector<data> points)
   {
     std::vector<data> first_mid = std::vector<data>();
     // Get the first half
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < index + 1; i++)
       first_mid.push_back(points[i]);
 
     // Recursive call
@@ -58,6 +64,7 @@ std::vector<data> simplification(std::vector<data> points)
     auto res = std::vector<data>();
     for (auto ele : res1)
       res.push_back(ele);
+    res.pop_back();
     for (auto ele : res2)
       res.push_back(ele);
     return res;
