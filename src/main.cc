@@ -18,9 +18,12 @@ int main()
     double start=0.0, stop=0.0;
     start = omp_get_wtime();
 	for (auto day : days) 
-  	{
+  {
+    std::cout << "Processing file: " << day.name << "\n";
 		auto simplified_day = day;
 		simplified_day.data_vect = simplification(day.data_vect);
+    if (simplified_day.data_vect.size() == 0)
+      std::cout << "BAD SIMPLIFICATION\n"; 
 		auto patterns = getPatterns(simplified_day.data_vect);
 		printPattern(patterns);
   	}

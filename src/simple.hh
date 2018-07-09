@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <iterator>
+#include <string>
 
 #include "data.hh"
 
