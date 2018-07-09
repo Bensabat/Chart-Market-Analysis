@@ -27,13 +27,15 @@ std::vector<data> simplification(std::vector<data> points)
   float epsilon = 100;
 
   float dmax = 0;
-  int index = 0;
-  int last_idx = points.size() - 1;
+  std::size_t index = 0;
+  std::size_t last_idx = points.size() - 1;
 
   // Find the point with the max distance
-  for (std::size_t t = 1; t != points.size(); ++t)
+  for (std::size_t t = 1; t <  points.size() - 1; ++t)
   {
-    float d = perpendicularDistance(points[t], points[0], points[last_idx]);
+    float d = 0;
+    if (points.size() > 0)
+      d = perpendicularDistance(points[t], points[0], points[last_idx]);
     if (d > dmax)
     {
       dmax = d;
@@ -46,15 +48,19 @@ std::vector<data> simplification(std::vector<data> points)
   {
     std::vector<data> first_mid = std::vector<data>();
     // Get the first half
-    for (int i = 0; i < index + 1; i++)
+    std::cout << "SIZE POINTS: " << points.size() << "\n";
+    for (std::size_t i = 0; i < points.size() && i < index; i++)
+    {
+      std::cout << i << "\n";
       first_mid.push_back(points[i]);
+    }
 
     // Recursive call
     std::vector<data> res1 = simplification(first_mid);
 
     // Get the second half
     first_mid.clear();
-    for (int i = index; i < last_idx; i++)
+    for (std::size_t i = index; i < points.size() - 1&& i < last_idx; i++)
       first_mid.push_back(points[i]);
 
     // Recursive call

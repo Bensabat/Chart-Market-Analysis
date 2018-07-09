@@ -28,7 +28,7 @@ int main()
 		printPattern(patterns);
   	}
 	stop = omp_get_wtime();
-    std::cout << stop-start << std::endl;
+    std::cout << "time in sequential: " << stop-start << std::endl;
 	start = omp_get_wtime();
 
 	for (auto day : days) 
@@ -36,9 +36,10 @@ int main()
 		auto simplified_day = day;
 		simplified_day.data_vect = simplification(day.data_vect);
 		auto patterns = getPatternsParallel(simplified_day.data_vect);
-		printPattern(patterns);
+		//printPattern(patterns);
   	}
     stop = omp_get_wtime();
     std::cout << stop-start << std::endl;
+
 	return 0;
 }
