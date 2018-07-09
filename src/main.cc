@@ -15,7 +15,8 @@ int main()
 
 	// Plotting days
 	//plot_days(days);
-
+    double start=0.0, stop=0.0;
+    start = omp_get_wtime();
 	for (auto day : days) 
   	{
 		auto simplified_day = day;
@@ -23,6 +24,18 @@ int main()
 		auto patterns = getPatterns(simplified_day.data_vect);
 		printPattern(patterns);
   	}
+	stop = omp_get_wtime();
+    std::cout << stop-start << std::endl;
+	start = omp_get_wtime();
 
+	for (auto day : days) 
+  	{
+		auto simplified_day = day;
+		simplified_day.data_vect = simplification(day.data_vect);
+		auto patterns = getPatternsParallel(simplified_day.data_vect);
+		printPattern(patterns);
+  	}
+    stop = omp_get_wtime();
+    std::cout << stop-start << std::endl;
 	return 0;
 }

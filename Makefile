@@ -1,5 +1,5 @@
-CXX      = g++
-CXXFLAGS = -Werror -Wextra -Wall -pedantic -std=c++14 -O2
+CXX      = g++-8
+CXXFLAGS = -fopenmp -Werror -Wextra -Wall -pedantic -std=c++14 -O2
 
 SRC  = src/main.cc		\
 			 src/parser.cc	\

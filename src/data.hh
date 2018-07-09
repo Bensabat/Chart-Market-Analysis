@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <omp.h>
 #include <tuple>
 #include <vector>
 
