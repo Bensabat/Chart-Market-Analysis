@@ -1,5 +1,6 @@
 CXX      = g++
-CXXFLAGS = -fopenmp -Werror -Wextra -Wall -pedantic -std=c++14 -O2
+CXXMAC	 = g++-8
+CXXFLAGS = -fopenmp -Wextra -Wall -pedantic -std=c++14 -O2
 
 SRC  = src/main.cc		\
 			 src/parser.cc	\
@@ -10,5 +11,7 @@ EXEC = detect_pattern
 all:
 	$(CXX) $(CXXFLAGS) $(SRC) -o $(EXEC)
 
+mac:
+	$(CXXMAC) $(CXXFLAGS) $(SRC) -o $(EXEC)
 rm:
 	rm $(EXEC) $(EXEC2)
