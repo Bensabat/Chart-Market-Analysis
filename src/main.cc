@@ -15,22 +15,25 @@ int main()
 
 	// Plotting days
 	//plot_days(days);
-    double start=0.0, stop=0.0;
+    
+	double start=0.0, stop=0.0;
     start = omp_get_wtime();
 	for (auto day : days) 
-  {
-    std::cout << "Processing file: " << day.name << "\n";
+    {
+		std::cout << "Processing file: " << day.name << "\n";
 		auto simplified_day = day;
 		simplified_day.data_vect = simplification(day.data_vect);
-    if (simplified_day.data_vect.size() == 0)
-      std::cout << "BAD SIMPLIFICATION\n"; 
+		
+		if (simplified_day.data_vect.size() == 0)
+			std::cout << "BAD SIMPLIFICATION\n"; 
 		auto patterns = getPatterns(simplified_day.data_vect);
 		printPattern(patterns);
   	}
+
 	stop = omp_get_wtime();
     std::cout << "time in sequential: " << stop-start << std::endl;
-	start = omp_get_wtime();
 
+	start = omp_get_wtime();
 	for (auto day : days) 
   	{
 		auto simplified_day = day;
@@ -39,7 +42,7 @@ int main()
 		//printPattern(patterns);
   	}
     stop = omp_get_wtime();
-    std::cout << stop-start << std::endl;
+    std::cout << "time in parallel: " << stop-start << std::endl;
 
 	return 0;
 }
