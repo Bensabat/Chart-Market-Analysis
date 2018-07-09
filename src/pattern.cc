@@ -52,10 +52,19 @@ std::vector<std::tuple<struct data, struct data, enum Type>> getPatternsParallel
                 float n4 = d[i + 3].value;
                 float n5 = d[i + 4].value;
                 
-                if (doubleTop(n1, n2, n3, n4, n5))
-                    res.push_back(std::make_tuple(d[i], d[i + 4], DoubleTop));
-                if (doubleBottom(n1, n2, n3, n4, n5))
-                    res.push_back(std::make_tuple(d[i], d[i + 4], DoubleBottom));
+                #pragma omp parallel sections
+                {
+                    #pragma omp section
+                    {
+                        if (doubleTop(n1, n2, n3, n4, n5))
+                            res.push_back(std::make_tuple(d[i], d[i + 4], DoubleTop));
+                    }
+                    #pragma omp section
+                    {
+                        if (doubleTop(n1, n2, n3, n4, n5))
+                            res.push_back(std::make_tuple(d[i], d[i + 4], DoubleTop));
+                    }
+                }
                 
             }
     }
