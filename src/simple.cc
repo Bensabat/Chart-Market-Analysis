@@ -48,12 +48,8 @@ std::vector<data> simplification(std::vector<data> points)
   {
     std::vector<data> first_mid = std::vector<data>();
     // Get the first half
-    std::cout << "SIZE POINTS: " << points.size() << "\n";
     for (std::size_t i = 0; i < points.size() && i < index; i++)
-    {
-      std::cout << i << "\n";
       first_mid.push_back(points[i]);
-    }
 
     // Recursive call
     std::vector<data> res1 = simplification(first_mid);
