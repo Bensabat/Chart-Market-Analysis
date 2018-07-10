@@ -7,27 +7,30 @@
 #include "pattern.hh"
 #include "plotter.hh"
 
+
 int main()
 {
 	// Vector containing all the days data
 	std::vector<day> days;
 	parse_days(days);
 
-	// Plotting days
-	//plot_days(days);
-    
 	double start=0.0, stop=0.0;
     start = omp_get_wtime();
 	for (auto day : days) 
     {
 		std::cout << "Processing file: " << day.name << "\n";
+
+		std::string day_name_path = day.name;
+		std::string day_name = day_name_path.substr(12, day_name_path.size() - 12);
+
 		auto simplified_day = day;
 		simplified_day.data_vect = simplification(day.data_vect);
-		
+
 		if (simplified_day.data_vect.size() == 0)
-			std::cout << "BAD SIMPLIFICATION\n"; 
+			std::cout << "BAD SIMPLIFICATION\n";
+ 
 		auto patterns = getPatterns(simplified_day.data_vect);
-		printPattern(patterns);
+		printPattern(patterns, day_name);
   	}
 
 	stop = omp_get_wtime();
@@ -39,7 +42,7 @@ int main()
 		auto simplified_day = day;
 		simplified_day.data_vect = simplification(day.data_vect);
 		auto patterns = getPatternsParallel(simplified_day.data_vect);
-		//printPattern(patterns);
+		//printPattern(patterns, day_name);
   	}
     stop = omp_get_wtime();
     std::cout << "Time in parallel: " << stop-start << std::endl;

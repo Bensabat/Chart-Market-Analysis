@@ -72,13 +72,17 @@ std::vector<std::tuple<struct data, struct data,  struct data, struct data, stru
 }
 
 
-void printPattern(std::vector<std::tuple<struct data, struct data, struct data, struct data, struct data, enum Type>> patterns) {
+void printPattern(std::vector<std::tuple<struct data, struct data, struct data, struct data, struct data, enum Type>> patterns,
+                  std::string day_name) {
   std::cout << std::endl;
   if (patterns.size() == 0)
     std::cout << "\tNo pattern found.\n";
   else 
   {
-    for (size_t i = 0; i < patterns.size(); i++) {
+    mkdir("./results", S_IRWXU);
+	std::ofstream outfile ("./results/" + day_name);
+    for (size_t i = 0; i < patterns.size(); i++)
+    {
         std::cout << "\t" << std::get<5>(patterns[i]) << ": "
                   << "(" << std::get<0>(patterns[i]).date << ", " << std::get<0>(patterns[i]).value << ") - "
                   << "(" << std::get<1>(patterns[i]).date << ", " << std::get<1>(patterns[i]).value << ") - "
@@ -86,6 +90,14 @@ void printPattern(std::vector<std::tuple<struct data, struct data, struct data, 
                   << "(" << std::get<3>(patterns[i]).date << ", " << std::get<3>(patterns[i]).value << ") - "
                   << "(" << std::get<4>(patterns[i]).date << ", " << std::get<4>(patterns[i]).value << ")"
                   << std::endl;
+        
+        outfile << std::get<0>(patterns[i]).date << " " << std::get<0>(patterns[i]).value << " "
+                << std::get<1>(patterns[i]).date << " " << std::get<1>(patterns[i]).value << " "
+                << std::get<2>(patterns[i]).date << " " << std::get<2>(patterns[i]).value << " "
+                << std::get<3>(patterns[i]).date << " " << std::get<3>(patterns[i]).value << " "
+                << std::get<4>(patterns[i]).date << " " << std::get<4>(patterns[i]).value
+                << std::endl;
+        
     }
   }
   std::cout << std::endl;  

@@ -1,9 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <omp.h>
 #include <tuple>
 #include <vector>
+//#include <direct.h>
+#include <sys/stat.h>
+#include <string>
 
 typedef struct data {
   float value;  // ex: 5538.2
