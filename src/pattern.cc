@@ -77,7 +77,7 @@ void printPattern(std::vector<std::tuple<struct data, struct data, struct data, 
   std::cout << std::endl;
   if (patterns.size() == 0)
     std::cout << "\tNo pattern found.\n";
-  else 
+  else
   {
     mkdir("./results", S_IRWXU);
 	std::ofstream outfile ("./results/" + day_name);
