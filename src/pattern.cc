@@ -73,14 +73,20 @@ std::vector<std::tuple<struct data, struct data,  struct data, struct data, stru
 
 
 void printPattern(std::vector<std::tuple<struct data, struct data, struct data, struct data, struct data, enum Type>> patterns) {
+  std::cout << std::endl;
   if (patterns.size() == 0)
-    std::cout << "No pattern found.\n";
+    std::cout << "\tNo pattern found.\n";
   else 
   {
     for (size_t i = 0; i < patterns.size(); i++) {
-        std::cout << std::get<5>(patterns[i]) << ": du "
-                  << std::get<0>(patterns[i]).date << "eme au "
-                  << std::get<4>(patterns[i]).date << "eme date " << std::endl;
+        std::cout << "\t" << std::get<5>(patterns[i]) << ": "
+                  << "(" << std::get<0>(patterns[i]).date << ", " << std::get<0>(patterns[i]).value << ") - "
+                  << "(" << std::get<1>(patterns[i]).date << ", " << std::get<1>(patterns[i]).value << ") - "
+                  << "(" << std::get<2>(patterns[i]).date << ", " << std::get<2>(patterns[i]).value << ") - "
+                  << "(" << std::get<3>(patterns[i]).date << ", " << std::get<3>(patterns[i]).value << ") - "
+                  << "(" << std::get<4>(patterns[i]).date << ", " << std::get<4>(patterns[i]).value << ")"
+                  << std::endl;
     }
   }
+  std::cout << std::endl;  
 }

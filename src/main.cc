@@ -31,7 +31,7 @@ int main()
   	}
 
 	stop = omp_get_wtime();
-    std::cout << "time in sequential: " << stop-start << std::endl;
+    std::cout << "Time in sequential: " << stop-start << std::endl;
 
 	start = omp_get_wtime();
 	for (auto day : days) 
@@ -42,7 +42,7 @@ int main()
 		//printPattern(patterns);
   	}
     stop = omp_get_wtime();
-    std::cout << "time in parallel: " << stop-start << std::endl;
+    std::cout << "Time in parallel: " << stop-start << std::endl;
 
 	return 0;
 }
