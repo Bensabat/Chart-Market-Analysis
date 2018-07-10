@@ -18,8 +18,8 @@ bool doubleBottom(float n1, float n2, float n3, float n4, float n5) {
 
 
 
-std::vector<std::tuple<struct data, struct data, enum Type>> getPatterns(std::vector<struct data> datas) {
-    std::vector<std::tuple<struct data, struct data, enum Type>> res;
+std::vector<std::tuple<struct data, struct data, struct data, struct data, struct data, enum Type>> getPatterns(std::vector<struct data> datas) {
+    std::vector<std::tuple<struct data, struct data,  struct data, struct data, struct data, enum Type>> res;
     for (size_t i = 0; i < datas.size(); i++) {
             if (i+4 < datas.size()) {
                 auto d = datas.data();
@@ -30,17 +30,17 @@ std::vector<std::tuple<struct data, struct data, enum Type>> getPatterns(std::ve
                 float n5 = d[i + 4].value;
                 
                 if (doubleTop(n1, n2, n3, n4, n5))
-                    res.push_back(std::make_tuple(d[i], d[i + 4], DoubleTop));
+                    res.push_back(std::make_tuple(d[i], d[i + 1], d[i + 2], d[i + 3], d[i + 4], DoubleTop));
                 if (doubleBottom(n1, n2, n3, n4, n5))
-                    res.push_back(std::make_tuple(d[i], d[i + 4], DoubleBottom));
+                    res.push_back(std::make_tuple(d[i], d[i + 1], d[i + 2], d[i + 3], d[i + 4], DoubleBottom));
                 
             }
     }
     return res;
 }
 
-std::vector<std::tuple<struct data, struct data, enum Type>> getPatternsParallel(std::vector<struct data> datas) {
-    std::vector<std::tuple<struct data, struct data, enum Type>> res;
+std::vector<std::tuple<struct data, struct data,  struct data, struct data, struct data, enum Type>> getPatternsParallel(std::vector<struct data> datas) {
+    std::vector<std::tuple<struct data, struct data, struct data, struct data, struct data, enum Type>> res;
     size_t i;
     #pragma omp parallel for private(i)
     for (i = 0; i < datas.size(); i++) {
@@ -57,12 +57,12 @@ std::vector<std::tuple<struct data, struct data, enum Type>> getPatternsParallel
                     #pragma omp section
                     {
                         if (doubleTop(n1, n2, n3, n4, n5))
-                            res.push_back(std::make_tuple(d[i], d[i + 4], DoubleTop));
+                            res.push_back(std::make_tuple(d[i], d[i + 1], d[i + 2], d[i + 3], d[i + 4], DoubleTop));
                     }
                     #pragma omp section
                     {
                         if (doubleTop(n1, n2, n3, n4, n5))
-                            res.push_back(std::make_tuple(d[i], d[i + 4], DoubleTop));
+                            res.push_back(std::make_tuple(d[i], d[i + 1], d[i + 2], d[i + 3], d[i + 4], DoubleTop));
                     }
                 }
                 
@@ -72,17 +72,15 @@ std::vector<std::tuple<struct data, struct data, enum Type>> getPatternsParallel
 }
 
 
-void printPattern(std::vector<std::tuple<struct data, struct data, enum Type>> patterns) {
+void printPattern(std::vector<std::tuple<struct data, struct data, struct data, struct data, struct data, enum Type>> patterns) {
   if (patterns.size() == 0)
     std::cout << "No pattern found.\n";
   else 
   {
     for (size_t i = 0; i < patterns.size(); i++) {
-        std::cout << std::get<2>(patterns[i]) << ": du "
+        std::cout << std::get<5>(patterns[i]) << ": du "
                   << std::get<0>(patterns[i]).date << "eme au "
-                  << std::get<1>(patterns[i]).date << "eme date " << std::endl;
+                  << std::get<4>(patterns[i]).date << "eme date " << std::endl;
     }
   }
 }
-
-
